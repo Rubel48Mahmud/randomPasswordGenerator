@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator</title>
+  <style>
+  body{
+  background:blue
+  }
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+    h3{text-shadow:1px 1px 2px silver}
+   .main{
+   width:250px;
+   margin:200px auto;
+   background:#fff;
+   text-align:center;
+   padding:20px 10px;
+   border-radius:10px;
+   }
+   
+   #password-display{
+   margin-top:10px;
+   height:30px;
+   width:70%;
+   font-size:15px;
+   text-align:center;
+   font-weight:bold;
+   color:#000;
+   border-radius:5px;
+   border:2px solid gray
+   
+   }
+   #copy-btn{
+   height:30px;
+   margin-left:5px;
+   padding:5px;
+   outline:none;
+   font-weight:bold;
+   border-radius:5px;
+   border:2px solid gray
+   }
+   #copy-btn:active{
+   background:rgba(0,0,0,0.5)
+   
+   }
+   #password-length{
+   -webkit-appearance: none;
+   width: 75%;
+   height: 10px;
+   border-radius: 10px;
+   outline: none;
+   margin-top:30px;
+   background:blue
+   
+   }
+   
+   #generate-btn{
+   margin-top:20px;
+   width:90%;
+   height:30px;
+   background:blue;
+   color:#fff;
+   outline:none;
+   font-weight:bold;
+   border-radius:10px;
+   font-size:16px;
+   border:2px solid blue
+   }
+   #generate-btn:active{
+   background:rgba(0,0,0,0.5)
+   
+   }
+  </style>
+</head>
+<body>
+<div class="main">
+  <h3>Password Generator</h3>
+  <input type="text" id="password-display"><button id="copy-btn" onclick="copy()">Copy</button>
+  <input type="range" id="password-length" min="4" max="16" value="8" oninput="updatePasswordLength()">
+  <span id="length-display">08</span>
+  <button id="generate-btn" onclick="generatePassword()">Generate Password</button>
+</div>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+  <script>
+    function updatePasswordLength() {
+      const lengthDisplay = document.getElementById("length-display");
+      const passwordLengthInput = document.getElementById("password-length");
+      lengthDisplay.textContent = passwordLengthInput.value;
+      if(lengthDisplay.textContent<=9){
+      lengthDisplay.textContent="0"+lengthDisplay.textContent
+      }
+    }
+
+    function generatePassword() {
+      const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@$&%π<>";
+      const passwordLength = document.getElementById("password-length").value;
+      let password = "";
+
+      for (let i = 0; i < passwordLength; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset.charAt(randomIndex);
+      }
+
+      document.getElementById("password-display").value = password;
+    }
+    
+    
+    function copy(){
+    
+  var pass = document.getElementById("password-display");
+    
+    pass.select();
+    pass.setSelectionRange(0, 99999); 
+    document.execCommand("copy");
+    
+    
+    swal(
+    "Password Copied.", 
+    pass.value, 
+    "success")
+    
+    }
+    
+  </script>
+</body>
+</html>
+
